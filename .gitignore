@@ -8,3 +8,6 @@ __pycache__/
 
 # because macOS is macOS.
 .DS_Store
+
+#script for develop
+*.sh
