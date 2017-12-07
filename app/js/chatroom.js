@@ -2,18 +2,18 @@
 $(function() {
   // Connect to SkyWay, have server assign an ID instead of providing one
   // Showing off some of the configs available with SkyWay :).
-  const peer = new Peer({
-    // Set API key for cloud server (you don't need this if you're running your
-    // own.
-    key:         window.__SKYWAY_KEY__,
-    // Set highest debug level (log everything!).
-    debug:       3,
-    // Set a logging function:
-    logFunction: args => {
-      const copy = [...args].join(' ');
-      $('.log').append(copy + '<br>');
-    },
-  });
+  // const peer = new Peer({
+  //   // Set API key for cloud server (you don't need this if you're running your
+  //   // own.
+  //   key:         window.__SKYWAY_KEY__,
+  //   // Set highest debug level (log everything!).
+  //   debug:       3,
+  //   // Set a logging function:
+  //   logFunction: args => {
+  //     const copy = [...args].join(' ');
+  //     $('.log').append(copy + '<br>');
+  //   },
+  // });
   const connectedPeers = {};
 
   // Show this peer's ID.
@@ -58,6 +58,9 @@ $(function() {
         connectedPeers[roomName] = room;
       });
     }
+
+    // connect時に ルームメンバーの画面に自分のシェアスクリーンを表示させる
+    alert("s");
   });
 
   // Close a connection.

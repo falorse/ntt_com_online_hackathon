@@ -18,7 +18,7 @@ $(function() {
     let localStream = null;
 
     // Create Peer object
-    const peer = new Peer({key: APIKEY, debug: 3});
+    // const peer = new Peer({key: APIKEY, debug: 3});
 
     // Prepare screen share object
     const ss = ScreenShare.create({debug: true});
