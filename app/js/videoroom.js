@@ -31,6 +31,8 @@ $(function() {
 
     $('#room-id').text(roomName);
     step3(room);
+
+    enterToChatroom();
   });
 
   $('#end-call').on('click', () => {

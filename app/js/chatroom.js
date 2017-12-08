@@ -59,8 +59,9 @@ $(function() {
       });
     }
 
+
     // connect時に ルームメンバーの画面に自分のシェアスクリーンを表示させる
-    alert("s");
+    // alert("s");
   });
 
   // Close a connection.
