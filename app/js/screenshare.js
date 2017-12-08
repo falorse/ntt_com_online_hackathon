@@ -59,10 +59,9 @@ $(function() {
     if (!roomName) {
       return;
     }
-    room = peer.joinRoom('mesh_video_' + roomName, {stream: localStream});
+    room = peer.joinRoom('ss_video_' + roomName, {stream: localStream});
 
-    $('#room-id').text(roomName);
-    ss_join_room(room);    
+    ss_meshroom(room);    
   });
 
 
@@ -104,13 +103,21 @@ $(function() {
     })
       .then(stream => {
         $('#ss_my-video')[0].srcObject = stream;
+//        $('#ss_my-video')[0].srcObject = stream;
+//	      const el = $('#ss_my-video');
+//	      el.srcObject = stream;
+//	      el.play();
+        eachActiveRoom((room, $c) => {
+        	room.replaceStream(stream);
+            ss_meshroom(room);
+        	//room.send(msg);
+//            $c.find('.messages').append('<div><span class="you">You: </span>' + msg
+//              + '</div>');
+          });
+//        const roomName = $('#roomName').val();
+//        room = peer.joinRoom('ss_video_' + roomName, {stream: stream});
 
-        if (existingCall !== null) {
-          const peerid = existingCall.peer;
-          existingCall.close();
-          const call = peer.call(peerid, stream);
-          ss_step3(call);
-        }
+//        ss_meshroom(room);
         localStream = stream;
       })
       .catch(error => {
@@ -129,13 +136,15 @@ $(function() {
     navigator.mediaDevices.getUserMedia({audio: true, video: true})
       .then(stream => {
         $('#ss_my-video')[0].srcObject = stream;
-
-        if (existingCall !== null) {
-          const peerid = existingCall.peer;
-          existingCall.close();
-          const call = peer.call(peerid, stream);
-          ss_step3(call);
-        }
+	      const el = $('#ss_my-video');
+	      el.srcObject = stream;
+	      el.play();
+//        if (existingCall !== null) {
+//          const peerid = existingCall.peer;
+//          existingCall.close();
+//          const call = peer.call(peerid, stream);
+//          ss_step3(call);
+//        }
         localStream = stream;
       })
       .catch(err => {
@@ -188,4 +197,38 @@ $(function() {
     $('#ss_step1, #ss_step2').hide();
     $('#ss_step3').show();
   }
+
+  function ss_meshroom(room) {
+	    // Wait for stream on the call, then set peer video display
+	    room.on('stream', stream => {
+	    	alert("get stream");
+	      const peerId = stream.peerId;
+	      alert(peerId);
+	      const el = $('#ss_' + peerId).find('video').get(0);
+	      alert(el);
+		      $('#screentabs').append($(
+		      '<div id="ss_' + peerId + '">' + peerId +
+//		          '<div>' + stream.peerId.substr(0,8) +	 '</div>' +
+		          '<video class="remoteVideos" autoplay playsinline>' +
+		        '</div>'));	   
+		      
+	      const el2 = $('#ss_' + peerId).find('video').get(0);
+	      el2.srcObject = stream;
+	      el2.play();
+	    });
+
+	    room.on('removeStream', function(stream) {
+	      const peerId = stream.peerId;
+	      $('#video_' + peerId + '_' + stream.id.replace('{', '').replace('}', '')).remove();
+	    });
+
+	    // UI stuff
+//	    room.on('close', step2);
+	    room.on('peerLeave', peerId => {
+	      $('.ss_' + peerId).remove();
+	    });
+//	    $('#step1, #step2').hide();
+//	    $('#step3').show();
+	  }
+  
 });
