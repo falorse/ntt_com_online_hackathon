@@ -1,19 +1,5 @@
 /* eslint-disable require-jsdoc */
 $(function() {
-  // Connect to SkyWay, have server assign an ID instead of providing one
-  // Showing off some of the configs available with SkyWay :).
-  // const peer = new Peer({
-  //   // Set API key for cloud server (you don't need this if you're running your
-  //   // own.
-  //   key:         window.__SKYWAY_KEY__,
-  //   // Set highest debug level (log everything!).
-  //   debug:       3,
-  //   // Set a logging function:
-  //   logFunction: args => {
-  //     const copy = [...args].join(' ');
-  //     $('.log').append(copy + '<br>');
-  //   },
-  // });
   const connectedPeers = {};
 
   // Show this peer's ID.
@@ -36,6 +22,7 @@ $(function() {
       $c.find('.messages').append('<div><span class="file">You sent a file.</span></div>');
     });
   });
+  
   function doNothing(e) {
     e.preventDefault();
     e.stopPropagation();
@@ -45,21 +32,32 @@ $(function() {
 
   // Connect to a room
   $('#connect').on('submit', e => {
+//	  $('#join-room').on('submit', e => {
     e.preventDefault();
+		  
     const roomName = $('#roomName').val();
     if (!roomName) {
       return;
     }
+    
     if (!connectedPeers[roomName]) {
       // Create 2 connections, one labelled chat and another labelled file.
       const room = peer.joinRoom('mesh_text_' + roomName);
+      console.log(connectedPeers);
+      console.log(connectedPeers[roomName]);
+      console.log(room);
+      console.log(room.connections);
+      console.log(room.connections[0]);
+      
       room.on('open', function() {
         connect(room);
         connectedPeers[roomName] = room;
       });
     }
-
-
+    
+	// connect時に同時にvideoroomにも入る
+	// enterToVideoroom();
+	
     // connect時に ルームメンバーの画面に自分のシェアスクリーンを表示させる
     // alert("s");
   });

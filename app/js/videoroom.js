@@ -1,10 +1,10 @@
 /* eslint-disable require-jsdoc */
 $(function() {
   // Peer object
-  const peer = new Peer({
-    key:   window.__SKYWAY_KEY__,
-    debug: 3,
-  });
+//  const peer = new Peer({
+//    key:   window.__SKYWAY_KEY__,
+//    debug: 3,
+//  });
 
   let localStream;
   let room;
@@ -20,10 +20,12 @@ $(function() {
     step2();
   });
 
-  $('#make-call').on('submit', e => {
-    e.preventDefault();
+//  $('#make-call').on('submit', e => {
+    $('#connect').on('submit', e => {
+		  e.preventDefault();
     // Initiate a call!
-    const roomName = $('#join-room').val();
+    // const roomName = $('#join-room').val();
+    const roomName = $('#roomName').val();
     if (!roomName) {
       return;
     }
@@ -31,8 +33,8 @@ $(function() {
 
     $('#room-id').text(roomName);
     step3(room);
-
-    enterToChatroom();
+//
+//     enterToChatroom();
   });
 
   $('#end-call').on('click', () => {
@@ -55,7 +57,7 @@ $(function() {
     .then(deviceInfos => {
       const values = selectors.map(select => select.val() || '');
       selectors.forEach(select => {
-        const children = select.children(':first');
+        const children = select.children(':first');	
         while (children.length) {
           select.remove(children);
         }
@@ -118,15 +120,16 @@ $(function() {
     $('#join-room').focus();
   }
 
+  
   function step3(room) {
     // Wait for stream on the call, then set peer video display
     room.on('stream', stream => {
       const peerId = stream.peerId;
       const id = 'video_' + peerId + '_' + stream.id.replace('{', '').replace('}', '');
 
-      $('#their-videos').append($(
-        '<div class="video_' + peerId +'" id="' + id + '">' +
-          '<label>' + stream.peerId + ':' + stream.id + '</label>' +
+      $('#their-videos').after($(
+      '<div class="video_' + peerId +' col=2" id="' + id + '">' +
+          '<div>' + stream.peerId.substr(0,8) +	 '</div>' +
           '<video class="remoteVideos" autoplay playsinline>' +
         '</div>'));
       const el = $('#' + id).find('video').get(0);

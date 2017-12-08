@@ -9,17 +9,19 @@
         <script src="https://cdn.webrtc.ecl.ntt.com/screenshare-latest.js"></script>
         <script src="js/key.js"></script>
         <script src="js/init.js"></script>
+
+        <script src="js/screenshare.js"></script>
         <script src="js/bootstrap.js"></script>
         <script src="js/chatroom.js"></script>
         <!-- <script src="js/script.js"></script> -->
         <script src="js/videoroom.js"></script>
-        <script src="js/screenshare.js"></script>
 
         <link href="css/bootstrap.css" rel="stylesheet">
 <!--        <link href="css/chatroom.css" rel="stylesheet">
         <link href="css/videoroom.css" rel="stylesheet">
         <link href="css/screenshare.css" rel="stylesheet">
         <link href="css/style.css" rel="stylesheet">-->
+        <style>video{ width:200px; height:150px;}</style>
     </head>
 
     <body>
@@ -28,7 +30,7 @@
                                                        alt="Fork me on GitHub"></a>
 
         <div id="actions">
-            Your Peer ID is <span id="pid"></span><br>
+            Your ID is <span id="pid"></span><br>
             Connect to a room:
             <form id="connect">
                 <input type="text" id="roomName" placeholder="Room name">
@@ -42,17 +44,20 @@
             </form>
             <button id="close">Close selected connections</button>
         </div>
+        <div class="row">
         <div id="videoroom">
           <div class="pure-g">
 
             <!-- Video area -->
             video area
-            <div class="pure-u-2-3" id="video-container">
+            <div class="pure-2-3 row" height="200" id="video-container">
+              <video id="my-video" muted="true" autoplay playsinline class="col-2"></video>
+
+              <div class="col-2"></div>	
               <div id="their-videos"></div>
-              <video id="my-video" muted="true" autoplay playsinline></video>
             </div>
 
-            <!-- Steps -->
+            <!-- Steps --><!-- 
             <div class="pure-u-1-3">
               <h2>SkyWay Video Chat</h2>
 
@@ -64,7 +69,7 @@
                 <label for="videoSource">Video source: </label><select id="videoSource"></select>
               </div>
 
-              <!-- Get local audio/video stream -->
+              Get local audio/video stream
               <div id="step1">
                 <p>Please click `allow` on the top of the screen so we can access your webcam and microphone for calls.</p>
                 <div id="step1-error">
@@ -74,7 +79,7 @@
               </div>
 
               <p>Your id: <span id="my-id">...</span></p>
-              <!-- Make calls to others -->
+              Make calls to others
               <div id="step2">
                 <h3>Make a call</h3>
                 <form id="make-call" class="pure-form">
@@ -85,16 +90,16 @@
                 <p><strong>注意：</strong>同じルーム名を使用した場合、知らない人と接続する可能性があります。</p>
               </div>
 
-              <!-- Call in progress -->
+              Call in progress
               <div id="step3">
                 <p>Currently in room <span id="room-id">...</span></p>
                 <p><a href="#" class="pure-button pure-button-error" id="end-call">End call</a></p>
-              </div>
+              </div> -->
             </div>
           </div>
 
         </div>
-
+		</div>
         <div class="row">
             <div id="chatroom" class="col-4">
                 <div id="wrap"><div id="connections"><span class="filler">You have not yet
@@ -112,9 +117,9 @@
                     <!-- Video area -->
                     <div class="pure-u-2-3" id="video-container">
                         <p>Peer Video</p>
-                        <video id="their-video" autoplay></video>
+                        <video id="ss_their-video" autoplay></video>
                         <p>My Video</p>
-                        <video id="my-video" muted="true" width="480" height="240" autoplay></video>
+                        <video id="ss_my-video" muted="true" width="480" height="240" autoplay></video>
                     </div>
 
                     <!-- Steps -->
@@ -129,16 +134,16 @@
 
 
                         <!-- Get local audio/video stream -->
-                        <div id="step1">
+                        <div id="ss_step1">
                             <p>Please allow the camera and microphone to be used.</p>
-                            <div id="step1-error">
+                            <div id="ss_step1-error">
                                 <p>The camera or the microphone cannot be accessed. Please confirm that you have the correct permissions set in your browser</p>
-                                <a href="#" class="pure-button pure-button-error" id="step1-retry">Retry getting media</a>
+                                <a href="#" class="pure-button pure-button-error" id="ss_step1-retry">Retry getting media</a>
                             </div>
                         </div>
 
                         <!-- Make calls to others -->
-                        <div id="step2">
+                        <div id="ss_step2">
                             <p>My peer id: <span id="my-id">...</span></p>
                             <h3>Call</h3>
                             <div class="pure-form">
@@ -149,8 +154,8 @@
                         </div>
 
                         <!-- Call in progress -->
-                        <div id="step3">
-                            <p>Connected to: <span id="their-id">...</span></p>
+                        <div id="ss_step3">
+                            <p>Connected to: <span id="ss_their-id">...</span></p>
                             <p><a href="#" class="pure-button pure-button-error" id="stop-screen">End screenshare</a></p>
                             <p><a href="#" class="pure-button pure-button-error" id="end-call">End call</a></p>
                         </div>
