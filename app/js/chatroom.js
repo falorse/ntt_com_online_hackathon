@@ -54,12 +54,6 @@ $(function() {
         connectedPeers[roomName] = room;
       });
     }
-    
-	// connect時に同時にvideoroomにも入る
-	// enterToVideoroom();
-	
-    // connect時に ルームメンバーの画面に自分のシェアスクリーンを表示させる
-    // alert("s");
   });
 
   // Close a connection.

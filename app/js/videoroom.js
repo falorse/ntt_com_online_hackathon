@@ -147,7 +147,7 @@ $(function() {
     room.on('peerLeave', peerId => {
       $('.video_' + peerId).remove();
     });
-    $('#step1, #step2').hide();
-    $('#step3').show();
+//    $('#step1, #step2').hide();
+//    $('#step3').show();
   }
 });

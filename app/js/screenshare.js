@@ -21,8 +21,6 @@ $(function() {
     // Create Peer object
     // const peer = new Peer({key: APIKEY, debug: 3});
 
-//    alert("aaa");
-//    alert(peer.id);
     // Prepare screen share object
     const ss = ScreenShare.create({debug: true});
 
@@ -59,23 +57,14 @@ $(function() {
     if (!roomName) {
       return;
     }
-    room = peer.joinRoom('ss_video_' + roomName, {stream: localStream});
+    room = peer.joinRoom('ss_' + roomName, {stream: localStream});
 
+    room.on("peerJoin", peer=>{
+    	
+    });
+    
     ss_meshroom(room);    
   });
-
-
-  // join room 
-  function ss_join_room(room){
-	  room.on('stream', stream =>{
-        const peerId = stream.peerId;
-        const call = peer.call(peerId, null);
-        // TODOタブを追加(id = ss_peerId)
-        
-        console.log(peerId);
-        ss_step3(call);
-	  });
-  };
   
   // Finish call
   $('#end-call').on('click', () => {
@@ -92,7 +81,8 @@ $(function() {
   // Start screenshare
   $('#start-screen').on('click', () => {
     if (ss.isScreenShareAvailable() === false) {
-      alert('Screen Share cannot be used. Please install the Chrome extension.');
+      alert('Screen Share cannot be used. Please install the Chrome extension.\n'
+    		  + 'https://chrome.google.com/webstore/detail/skyway-screenshare-sample/gjkihkcdicimhkhmnopjgpohogiggbao/related	');
       return;
     }
 
@@ -103,21 +93,15 @@ $(function() {
     })
       .then(stream => {
         $('#ss_my-video')[0].srcObject = stream;
-//        $('#ss_my-video')[0].srcObject = stream;
-//	      const el = $('#ss_my-video');
-//	      el.srcObject = stream;
-//	      el.play();
-        eachActiveRoom((room, $c) => {
-        	room.replaceStream(stream);
-            ss_meshroom(room);
-        	//room.send(msg);
-//            $c.find('.messages').append('<div><span class="you">You: </span>' + msg
-//              + '</div>');
-          });
-//        const roomName = $('#roomName').val();
-//        room = peer.joinRoom('ss_video_' + roomName, {stream: stream});
-
-//        ss_meshroom(room);
+        console.log(peer.rooms);
+        console.log(peer.rooms[2]);
+        console.log(peer.rooms["ss_" + roomName]);
+        peer.rooms["ss_" + roomName].replaceStream(stream);
+//        eachActiveRoom((room, $c) => {
+//        	alert("eachActive");
+//        	room.replaceStream(stream);
+//            ss_meshroom(room);
+//          });
         localStream = stream;
       })
       .catch(error => {
@@ -139,12 +123,12 @@ $(function() {
 	      const el = $('#ss_my-video');
 	      el.srcObject = stream;
 	      el.play();
-//        if (existingCall !== null) {
-//          const peerid = existingCall.peer;
-//          existingCall.close();
-//          const call = peer.call(peerid, stream);
-//          ss_step3(call);
-//        }
+        if (existingCall !== null) {
+          const peerid = existingCall.peer;
+          existingCall.close();
+          const call = peer.call(peerid, stream);
+          ss_step3(call);
+        }
         localStream = stream;
       })
       .catch(err => {
@@ -201,20 +185,18 @@ $(function() {
   function ss_meshroom(room) {
 	    // Wait for stream on the call, then set peer video display
 	    room.on('stream', stream => {
-	    	alert("get stream");
+	      alert("get stream from " + stream.peerId);
 	      const peerId = stream.peerId;
-	      alert(peerId);
-	      const el = $('#ss_' + peerId).find('video').get(0);
-	      alert(el);
+	      if(!($('#ss_' + peerId).length)){
 		      $('#screentabs').append($(
 		      '<div id="ss_' + peerId + '">' + peerId +
 //		          '<div>' + stream.peerId.substr(0,8) +	 '</div>' +
 		          '<video class="remoteVideos" autoplay playsinline>' +
 		        '</div>'));	   
-		      
-	      const el2 = $('#ss_' + peerId).find('video').get(0);
-	      el2.srcObject = stream;
-	      el2.play();
+	      }
+	      const el = $('#ss_' + peerId).find('video').get(0);
+	      el.srcObject = stream;
+	      el.play();
 	    });
 
 	    room.on('removeStream', function(stream) {
@@ -222,13 +204,10 @@ $(function() {
 	      $('#video_' + peerId + '_' + stream.id.replace('{', '').replace('}', '')).remove();
 	    });
 
-	    // UI stuff
-//	    room.on('close', step2);
 	    room.on('peerLeave', peerId => {
 	      $('.ss_' + peerId).remove();
+	      $('#ss_' + peerId).remove();
 	    });
-//	    $('#step1, #step2').hide();
-//	    $('#step3').show();
 	  }
   
 });
