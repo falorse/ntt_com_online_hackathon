@@ -11,3 +11,6 @@ __pycache__/
 
 #script for develop
 *.sh
+
+#._file
+*._*
