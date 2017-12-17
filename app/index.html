@@ -13,11 +13,11 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="js/chatroom.js"></script>
 
   <script src="js/speech_recognition.js"></script>
   <script src="js/screenshare.js"></script>
   <script src="js/bootstrap.js"></script>
-  <script src="js/chatroom.js"></script>
   <!-- <script src="js/script.js"></script> -->
   <script src="js/videoroom.js"></script>
 
@@ -37,15 +37,17 @@
 <body>
   <div class="content-fluid">
     <div id="actions">
+      Your ID is <span id="pid"></span>
+      <!-- <input type="text" id="pid" placeholder="your name"> -->
+      <button id="close" style="display:none">leave room</button>
       <div id="enter">
-        Your ID is <span id="pid"></span><br> enter room:
+        enter room:
         <form id="connect">
           <input type="text" id="roomName" placeholder="Room name">
           <input type="password" id="password" placeholder="password">
           <input class="button" type="submit" value="Connect">
         </form>
       </div>
-      <button id="close" style="display:none">leave room</button>
     </div>
 
     <div class="row">
@@ -64,8 +66,7 @@
         <h1>Chat</h1>
         <div id="wrap">
           <div id="connections">
-            <span class="filler">You have not yet
-                            made any connections.</span></div>
+            <span class="filler">please enter room.</span></div>
           <div class="clear"></div>
         </div>
         <form id="send">

@@ -10,5 +10,3 @@ const peer = new Peer({
     $('.log').append(copy + '<br>');
   },
 });
-
-//alert("init");

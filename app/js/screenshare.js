@@ -40,7 +40,6 @@ $(function() {
 
   // Error handler
   peer.on('error', err => {
-    alert(err.message);
     ss_step2();
   });
 

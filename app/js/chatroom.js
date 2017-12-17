@@ -34,7 +34,6 @@ $(function() {
   $('#connect').on('submit', e => {
 //	  $('#join-room').on('submit', e => {
     e.preventDefault();
-
     const roomName = $('#roomName').val();
     if (!roomName) {
       return;
