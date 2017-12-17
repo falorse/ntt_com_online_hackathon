@@ -90,9 +90,7 @@ $(function() {
     $('#text').focus();
     const chatbox = $('<div></div>').addClass('connection').addClass('active').attr('id', room.name);
     const roomName = room.name.replace('sfu_text_', '');
-    const header = $('<h1></h1>').html('Room: <strong>' + roomName + '</strong>');
     const messages = $('<div><em>Peer connected.</em></div>').addClass('messages');
-    chatbox.append(header);
     chatbox.append(messages);
     // Select connection handler.
     chatbox.on('click', () => {
