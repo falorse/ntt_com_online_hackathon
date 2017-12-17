@@ -57,7 +57,7 @@ $(function() {
     .then(deviceInfos => {
       const values = selectors.map(select => select.val() || '');
       selectors.forEach(select => {
-        const children = select.children(':first');	
+        const children = select.children(':first');
         while (children.length) {
           select.remove(children);
         }
@@ -120,7 +120,7 @@ $(function() {
     $('#join-room').focus();
   }
 
-  
+
   function step3(room) {
     // Wait for stream on the call, then set peer video display
     room.on('stream', stream => {

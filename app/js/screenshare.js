@@ -203,13 +203,21 @@ $(function() {
       //     '</div>'));
       // }
       if (!($('#screen_' + peerId).length)) {
+        // append tab button
         $('#screen_tabs').append($(
           '<li class="nav-item">' +
-          '<a class="nav-link" id="sreen_tab_' + peerId + '">' + peerId + '</a>' +
-          '<video id="screen_' + peerId + '"></video>' +
+          '<a href="#' + peerId + '_tab_content" class="nav-link bg-primary" ' +
+          'data-toggle="tab">' + peerId + '</a>' +
           '</li>'));
+          // append tab video
+        $('#screens').append($(
+          '<div class="tab-pane" id="'+ peerId + '_tab_content">' +
+          '<video id="' + peerId + '_screen" autoplay></video>' +
+          '</div>'
+          ));
       }
-      const el = $('#screen_' + peerId).get(0);
+      const el = $('#' + peerId + '_screen').get(0);
+      alert(el);
       el.srcObject = stream;
       el.play();
     });
