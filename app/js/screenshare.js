@@ -205,7 +205,7 @@ $(function() {
       if (!($('#screen_' + peerId).length)) {
         // append tab button
         $('#screen_tabs').append($(
-          '<li class="nav-item">' +
+          '<li id="' +  peerId + '_tab" class="nav-item">' +
           '<a href="#' + peerId + '_tab_content" class="nav-link bg-primary" ' +
           'data-toggle="tab">' + peerId + '</a>' +
           '</li>'));
@@ -228,8 +228,10 @@ $(function() {
     });
 
     room.on('peerLeave', peerId => {
-      $('.screen_' + peerId).remove();
-      $('#screen_' + peerId).remove();
+      $('.' + peerId + '_tab_content').remove();
+      $('#' + peerId + '_tab_content').remove();
+      $('.' + peerId + '_tab').remove();
+      $('#' + peerId + '_tab').remove();
     });
   }
 
