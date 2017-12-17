@@ -43,11 +43,6 @@ $(function() {
     if (!connectedPeers[roomName]) {
       // Create 2 connections, one labelled chat and another labelled file.
       const room = peer.joinRoom('mesh_text_' + roomName);
-      console.log(connectedPeers);
-      console.log(connectedPeers[roomName]);
-      console.log(room);
-      console.log(room.connections);
-      console.log(room.connections[0]);
 
       room.on('open', function() {
         connect(room);
@@ -159,7 +154,6 @@ $(function() {
     const checkedIds = {};
     actives.each((_, el) => {
       const peerId = $(el).attr('id');
-      alert(peerId);
       if (!checkedIds[peerId]) {
         const room = peer.rooms[peerId];
         fn(room, $(el));

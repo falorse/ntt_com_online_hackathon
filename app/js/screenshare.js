@@ -28,7 +28,6 @@ $(function() {
 
   // Get peer id from server
   //    peer.on('open', () => {
-  //    	alert("aaa");
   //      $('#my-id').text(peer.id);
   //    });
 
@@ -62,17 +61,9 @@ $(function() {
     room = peer.joinRoom('ss_' + roomName, {
       stream: localStream
     });
-    // alert("join room ss");
+
     room.on("peerJoin", peer => {
       var peerId = peer.id;
-      alert("peer" + peedId);
-      // if (!($('#screen_' + peerId).length)) {
-      //   $('#screen_tabs').append($(
-      //     '<li class="nav-item">' +
-      //     '<a class="nav-link" id="sreen_tab_' + peerId + '">' + peerId + '</a>' +
-      //     '<video id="screen_' + peerId + '"></video>' +
-      //     '</li>'));
-      // }
     });
 
     ss_meshroom(room);
@@ -196,12 +187,6 @@ $(function() {
     // Wait for stream on the call, then set peer video display
     room.on('stream', stream => {
       const peerId = stream.peerId;
-      // if (!($('#ss_' + peerId).length)) {
-      //   $('#screenshares').append($(
-      //     '<div id="screen_' + peerId + '">' + peerId +
-      //     '<video class="remoteVideos">' +
-      //     '</div>'));
-      // }
       if (!($('#screen_' + peerId).length)) {
         // append tab button
         $('#screen_tabs').append($(
